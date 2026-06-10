@@ -1,0 +1,34 @@
+Fireball: {
+	DisplayName: Fireball
+	Tooltip: ""
+}
+
+Hurricane: {
+	DisplayName: Hurricane
+	Tooltip: ""
+}
+
+DefenseSong: {
+	DisplayName: Defense Song
+	Tooltip: ""
+}
+
+Darkball: {
+	DisplayName: Darkball
+	Tooltip: ""
+}
+
+StarCoin: {
+	DisplayName: Star Coin
+	Tooltip: ""
+}
+
+KnightSword: {
+	DisplayName: Knight Sword
+	Tooltip: ""
+}
+
+Judgement: {
+	DisplayName: Judgement
+	Tooltip: ""
+}

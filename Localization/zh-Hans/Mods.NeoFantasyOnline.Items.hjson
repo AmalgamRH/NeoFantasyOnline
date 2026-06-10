@@ -1,0 +1,34 @@
+Fireball: {
+	DisplayName: 火球术
+	Tooltip: 向鼠标位置发射火球，对触碰到火球的敌人造成伤害
+}
+
+Hurricane: {
+	DisplayName: 飓风术
+	Tooltip: 在鼠标位置生成大范围的龙卷风，对靠近的敌人造成伤害
+}
+
+DefenseSong: {
+	DisplayName: 守护之歌
+	Tooltip: 生成数个音符并围绕角色旋转，对触碰到音符的敌人造成伤害
+}
+
+Darkball: {
+	DisplayName: 暗夜法球
+	Tooltip: "发射可追踪敌人的法球，对触碰到法球的敌人造成伤害\n长按鼠标可以将法球集中在鼠标周围"
+}
+
+StarCoin: {
+	DisplayName: 星石
+	Tooltip: “闪闪发光，心动不已”
+}
+
+KnightSword: {
+	DisplayName: 骑士之刃
+	Tooltip: 朝正前方进行劈砍并造成伤害
+}
+
+Judgement: {
+	DisplayName: 裁决
+	Tooltip: 神圣十字架从天而降，对区域范围内的敌人造成伤害并短暂晕眩敌敌人
+}

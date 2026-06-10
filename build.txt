@@ -1,0 +1,3 @@
+displayName = Neo Fantasy Online
+author = Amalgam
+version = 0.1
