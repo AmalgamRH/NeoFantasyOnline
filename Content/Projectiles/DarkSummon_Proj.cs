@@ -27,7 +27,18 @@ namespace NeoFantasyOnline.Content.Projectiles
         private float _effectTimer;
         private List<int> _hitNPCs = new List<int>();
         private Dictionary<int, int> _bossTimer = new Dictionary<int, int>();
-
+        private static SoundStyle HitSound;
+        public override void Load()
+        {
+            if (Main.netMode != NetmodeID.Server)
+            {
+                HitSound = new SoundStyle("NeoFantasyOnline/Assets/Sounds/DarkSummon_Hit")
+                {
+                    MaxInstances = 10,
+                    Volume = 0.3f,
+                };
+            }
+        }
         public override void SetStaticDefaults()
         {
             Main.projFrames[Type] = 4;
@@ -60,6 +71,9 @@ namespace NeoFantasyOnline.Content.Projectiles
                 Projectile.frameCounter = 0;
                 Projectile.frame = (Projectile.frame + 1) % Main.projFrames[Type];
             }
+
+            if(Main.rand.NextBool(180))
+                SoundEngine.PlaySound(HitSound, Projectile.Center);
 
             Projectile.spriteDirection = Projectile.velocity.X > 0 ? -1 : 1;
             Projectile.rotation = MathHelper.Pi + Projectile.velocity.ToRotation();
@@ -151,7 +165,6 @@ namespace NeoFantasyOnline.Content.Projectiles
         public override bool OnTileCollide(Vector2 oldVelocity)
         {
             MakeDust();
-
             BouncesLeft--;
             if (BouncesLeft < 0)
             {

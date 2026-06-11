@@ -46,3 +46,13 @@ LightArea: {
 	DisplayName: 光之圣域
 	Tooltip: 在周围随机生成光之圣域，对圣域内的敌人造成持续伤害
 }
+
+Blizzard: {
+	DisplayName: 暴风雪
+	Tooltip: "在随机范围内释放暴风雪，对范围内的敌人造成冻结效果"
+}
+
+BraverySong: {
+	DisplayName: 勇气之歌
+	Tooltip: "对四周发射音符魔法，对命中的敌人造成伤害并对其产生减速效果"
+}

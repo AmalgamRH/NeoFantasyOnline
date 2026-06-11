@@ -42,3 +42,13 @@ LightArea: {
 	DisplayName: Light Area
 	Tooltip: ""
 }
+
+Blizzard: {
+	DisplayName: Blizzard
+	Tooltip: ""
+}
+
+BraverySong: {
+	DisplayName: Bravery Song
+	Tooltip: ""
+}
