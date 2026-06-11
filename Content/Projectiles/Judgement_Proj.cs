@@ -6,6 +6,7 @@ using NeoFantasyOnline.Content.Items.Weapons;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
+using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
 using Terraria.ModLoader;
 
@@ -128,6 +129,14 @@ namespace NeoFantasyOnline.Content.Projectiles
                                 {
                                     _hitTileX = tx;
                                     _hitTileY = ty;
+
+                                    PunchCameraModifier modifier = new PunchCameraModifier(
+                                        Projectile.Center, 
+                                        (Main.rand.NextFloat() * MathHelper.TwoPi).ToRotationVector2(), 
+                                        12f, 6f, 20, 800f, 
+                                        Projectile.identity.ToString());
+
+                                    Main.instance.CameraModifiers.Add(modifier);
                                     State = Phase.Landing;
                                     _animTimer = 0;
                                     Projectile.velocity = Vector2.Zero;
@@ -193,7 +202,7 @@ namespace NeoFantasyOnline.Content.Projectiles
                 target.GetGlobalNPC<JudgementGlobalNPC>().Dazed = Stats.HitTimes;
             }
 
-            if (State == Phase.Staying)
+            if (State >= Phase.Landing)
             {
                 _hitNPCs.Add(target.whoAmI);
             }

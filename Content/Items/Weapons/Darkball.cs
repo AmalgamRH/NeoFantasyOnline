@@ -36,6 +36,7 @@ namespace NeoFantasyOnline.Content.Items.Weapons
             Item.autoReuse = true;
             Item.channel = true;
         }
+
         public override bool CanUseItem(Player player)
         {
             return player.ownedProjectileCounts[ProjectileType] <= 50;

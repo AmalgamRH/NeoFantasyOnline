@@ -24,8 +24,8 @@ namespace NeoFantasyOnline.Content.Projectiles
         public static float OutroTime = 30f;
         public override void SetSkillDefaults()
         {
-            Projectile.width = 184;
-            Projectile.height = 176;
+            Projectile.width = 160;
+            Projectile.height = 160;
             Projectile.friendly = true;
             Projectile.hostile = false;
             Projectile.timeLeft = (int)(300 + OutroTime);
@@ -33,7 +33,6 @@ namespace NeoFantasyOnline.Content.Projectiles
             Projectile.penetrate = -1;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 20;
-            
         }
         public override void OnSkillProjSpawn(IEntitySource source)
         {
@@ -63,17 +62,30 @@ namespace NeoFantasyOnline.Content.Projectiles
         {
             ActiveHurricanes.Remove(Projectile.whoAmI);
         }
+        public override void ModifyHitNPC(NPC target, ref NPC.HitModifiers modifiers)
+        {
+            Player player = Main.player[Projectile.owner];
+            modifiers.HitDirectionOverride = target.Center.X > player.MountedCenter.X ? 1 : -1;
+        }
 
         public override bool PreDraw(Player player, ref Color lightColor)
         {
             Texture2D tex = TextureAssets.Projectile[Type].Value;
             int frameHeight = tex.Height / Main.projFrames[Type];
 
-            Main.spriteBatch.Draw(tex, Projectile.Center - Main.screenPosition,
+            Main.spriteBatch.Draw(tex, 
+                Projectile.Center - Main.screenPosition,
                 new Rectangle(0, frameHeight * Projectile.frame, tex.Width, frameHeight),
                 lightColor * Projectile.Opacity, 0f, new Vector2(tex.Width, frameHeight) / 2, Projectile.scale,
                 SpriteEffects.None, 0f);
-            return true;
+
+            /*Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value,
+                new Rectangle(
+                    (int)(Projectile.getRect().X - Main.screenPosition.X),
+                    (int)(Projectile.getRect().Y - Main.screenPosition.Y),
+                    Projectile.getRect().Width, Projectile.getRect().Height),
+                Color.Red * 0.5f);*/
+            return false;
         }
     }
 }

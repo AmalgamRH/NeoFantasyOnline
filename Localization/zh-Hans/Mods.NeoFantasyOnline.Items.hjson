@@ -15,7 +15,11 @@ DefenseSong: {
 
 Darkball: {
 	DisplayName: 暗夜法球
-	Tooltip: "发射可追踪敌人的法球，对触碰到法球的敌人造成伤害\n长按鼠标可以将法球集中在鼠标周围"
+	Tooltip:
+		'''
+		发射可追踪敌人的法球，对触碰到法球的敌人造成伤害
+		长按鼠标可以将法球集中在鼠标周围
+		'''
 }
 
 StarCoin: {
@@ -31,4 +35,9 @@ KnightSword: {
 Judgement: {
 	DisplayName: 裁决
 	Tooltip: 神圣十字架从天而降，对区域范围内的敌人造成伤害并短暂晕眩敌敌人
+}
+
+DarkSummon: {
+	DisplayName: 黑暗召唤
+	Tooltip: 召唤鬼火攻击随机敌人，碰到敌人后会产生伤害并向下一个敌人发起攻击
 }

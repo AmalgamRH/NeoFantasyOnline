@@ -180,7 +180,7 @@ namespace NeoFantasyOnline.Content.Projectiles
                     float colMod = 0.4f + 0.6f * trailOpacity;
                     Main.spriteBatch.Draw(tex, drawPos.ToPoint().ToVector2(),
                         new Rectangle?(new Rectangle(0, frameHeight * Projectile.frame, tex.Width, frameHeight)),
-                        Color.Lerp(Color.MediumPurple, Color.Purple, i / length) * trailOpacity,
+                        Color.Lerp(Color.Purple, Color.MediumPurple, i / (float)length) * trailOpacity,
                         Projectile.rotation,
                         new Vector2(tex.Width, frameHeight) / 2,
                         Projectile.scale * (1f - 0.03f * i), effects, 0f);

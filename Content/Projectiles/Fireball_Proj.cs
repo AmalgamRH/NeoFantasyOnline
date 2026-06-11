@@ -21,8 +21,8 @@ namespace NeoFantasyOnline.Content.Projectiles
 
         public override void SetSkillDefaults()
         {
-            Projectile.width = 38;
-            Projectile.height = 38;
+            Projectile.width = 32;
+            Projectile.height = 32;
             Projectile.friendly = true;
             Projectile.hostile = false;
             Projectile.timeLeft = 10000;
@@ -103,10 +103,21 @@ namespace NeoFantasyOnline.Content.Projectiles
             int frameWidth = tex.Width;
             int frameHeight = tex.Height / Main.projFrames[Type];
 
-            Main.spriteBatch.Draw(tex, Projectile.Center - Main.screenPosition,
+            Main.spriteBatch.Draw(tex,
+                Projectile.Center - Main.screenPosition + new Vector2(12 * Projectile.scale, 0).RotatedBy(Projectile.rotation),
                 new Rectangle(0, frameHeight * Projectile.frame, frameWidth, frameHeight),
-                Color.White, Projectile.rotation, new Vector2(frameWidth, frameHeight) / 2, Projectile.scale,
+                Color.White,
+                Projectile.rotation,
+                new Vector2(frameWidth, frameHeight) / 2,
+                Projectile.scale,
                 Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0f);
+
+            /*Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value,
+                new Rectangle(
+                    (int)(Projectile.getRect().X - Main.screenPosition.X),
+                    (int)(Projectile.getRect().Y - Main.screenPosition.Y),
+                    Projectile.getRect().Width, Projectile.getRect().Height),
+                Color.Blue * 0.5f);*/
             return false;
         }
     }

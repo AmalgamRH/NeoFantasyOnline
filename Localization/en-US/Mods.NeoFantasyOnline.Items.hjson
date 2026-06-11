@@ -32,3 +32,8 @@ Judgement: {
 	DisplayName: Judgement
 	Tooltip: ""
 }
+
+DarkSummon: {
+	DisplayName: Dark Summon
+	Tooltip: ""
+}
