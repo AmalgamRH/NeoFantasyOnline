@@ -37,3 +37,8 @@ DarkSummon: {
 	DisplayName: Dark Summon
 	Tooltip: ""
 }
+
+LightArea: {
+	DisplayName: Light Area
+	Tooltip: ""
+}

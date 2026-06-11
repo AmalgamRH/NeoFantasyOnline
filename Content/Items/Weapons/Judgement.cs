@@ -33,6 +33,7 @@ namespace NeoFantasyOnline.Content.Items.Weapons
             Item.useAnimation = CurrentStats.FireCD;
             Item.knockBack = 0f;
             Item.shootSpeed = 0f;
+            Item.UseSound = SoundID.Item80;
             Item.autoReuse = true;
         }
 

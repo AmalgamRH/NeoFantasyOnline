@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using NeoFantasyOnline.Content.Bases;
 using NeoFantasyOnline.Content.Items.Weapons;
 using Terraria;
+using Terraria.Audio;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.Graphics.CameraModifiers;
@@ -16,6 +17,7 @@ namespace NeoFantasyOnline.Content.Projectiles
     {
         private enum Phase
         {
+            Appearing,
             FallingThrough,
             FallingCheckTile,
             Landing,
@@ -61,7 +63,7 @@ namespace NeoFantasyOnline.Content.Projectiles
             Projectile.width = (int)(Projectile.width * Projectile.scale);
             Projectile.height = (int)(Projectile.height * Projectile.scale);
 
-            State = Projectile.ai[2] == 1f ? Phase.FallingCheckTile : Phase.FallingThrough;
+            State = Phase.Appearing;
         }
 
         public override void AI()
@@ -72,15 +74,46 @@ namespace NeoFantasyOnline.Content.Projectiles
                 Projectile.Kill();
                 return;
             }
-            Lighting.AddLight(Projectile.Center, TorchID.Yellow);
+
+            for (int i = (int)Projectile.Top.Y; i < (int)Projectile.Bottom.Y; i += 16)
+            {
+                Lighting.AddLight(Projectile.Center, TorchID.Yellow);
+            }
+
             switch (State)
             {
-                case Phase.FallingThrough:
+                case Phase.Appearing:
                     {
                         _fadeTimer++;
-                        Projectile.alpha = (int)MathHelper.Lerp(255, 0, _fadeTimer / 10f);
+                        Projectile.alpha = (int)MathHelper.Lerp(255, 0, _fadeTimer / 30f);
+                        Projectile.velocity = Vector2.Zero;
 
-                        Projectile.velocity.Y = 8f;
+                        if (++_animTimer >= 8)
+                        {
+                            _animTimer = 0;
+
+                            Projectile.frame++;
+                            if (Projectile.frame > 2)
+                            {
+                                Projectile.frame = 0;
+                            }
+                        }
+
+                        if (_fadeTimer >= 20)
+                        {
+                            Projectile.alpha = 0;
+                            State = Projectile.ai[2] == 1f ? Phase.FallingCheckTile : Phase.FallingThrough;
+                            _animTimer = 0;
+                        }
+                        break;
+                    }
+                case Phase.FallingThrough:
+                    {
+                        Projectile.alpha = 0;
+                        Projectile.velocity.Y += 0.7f;
+                        if (Projectile.velocity.Y > 25f)
+                            Projectile.velocity.Y = 25f;
+
                         if (++_animTimer >= 8)
                         {
                             _animTimer = 0;
@@ -100,10 +133,11 @@ namespace NeoFantasyOnline.Content.Projectiles
                     }
                 case Phase.FallingCheckTile:
                     {
-                        _fadeTimer++;
-                        Projectile.alpha = (int)MathHelper.Lerp(255, 0, _fadeTimer / 30f);
+                        Projectile.alpha = 0;
+                        Projectile.velocity.Y += 0.7f;
+                        if (Projectile.velocity.Y > 25f)
+                            Projectile.velocity.Y = 25f;
 
-                        Projectile.velocity.Y = 8f;
                         if (++_animTimer >= 8)
                         {
                             _animTimer = 0;
@@ -125,10 +159,14 @@ namespace NeoFantasyOnline.Content.Projectiles
                             for (int ty = checkTop; ty <= checkBottom; ty++)
                             {
                                 Tile t = Framing.GetTileSafely(tx, ty);
-                                if (t.HasUnactuatedTile && Main.tileSolid[t.TileType] && !Main.tileSolidTop[t.TileType])
+                                if (t.HasUnactuatedTile && Main.tileSolid[t.TileType] || Main.tileSolidTop[t.TileType])
                                 {
                                     _hitTileX = tx;
                                     _hitTileY = ty;
+
+                                    SoundEngine.PlaySound(SoundID.DD2_BetsysWrathImpact.
+                                        WithVolumeScale(4f).WithPitchOffset(-1.5f), 
+                                        Projectile.Center);
 
                                     PunchCameraModifier modifier = new PunchCameraModifier(
                                         Projectile.Center, 
@@ -190,7 +228,7 @@ namespace NeoFantasyOnline.Content.Projectiles
 
         public override bool? CanHitNPC(NPC target)
         {
-            if (_hitNPCs.Contains(target.whoAmI))
+            if (_hitNPCs.Contains(target.whoAmI) || State == Phase.Appearing || State == Phase.FadingOut)
                 return false;
             return base.CanHitNPC(target);
         }

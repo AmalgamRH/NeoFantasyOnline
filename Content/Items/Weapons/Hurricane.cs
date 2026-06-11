@@ -32,7 +32,7 @@ namespace NeoFantasyOnline.Content.Items.Weapons
         {
             Item.damage = CurrentStats.Damage;
             Item.mana = 25;
-            Item.useTime = Item.useAnimation = 20;
+            Item.useTime = Item.useAnimation = CurrentStats.FireCD;
             Item.knockBack = 1 * MathHelper.Lerp(1f, 2f, Level / 8f);
             Item.shootSpeed = 0f;
 

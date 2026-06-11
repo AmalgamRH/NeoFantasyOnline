@@ -38,6 +38,11 @@ Judgement: {
 }
 
 DarkSummon: {
-	DisplayName: 黑暗召唤
-	Tooltip: 召唤鬼火攻击随机敌人，碰到敌人后会产生伤害并向下一个敌人发起攻击
+	DisplayName: 暗黑召唤
+	Tooltip: 发射可弹射追踪的暗黑法球，在敌人间连锁跳跃
+}
+
+LightArea: {
+	DisplayName: 光之圣域
+	Tooltip: 在周围随机生成光之圣域，对圣域内的敌人造成持续伤害
 }

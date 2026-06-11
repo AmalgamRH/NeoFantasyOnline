@@ -97,7 +97,7 @@ namespace NeoFantasyOnline.Content.Projectiles
                     Projectile.tileCollide = true;
                 }
 
-                if (ChainsLeft > 0)
+                if (ChainsLeft > 0 && _hasEverTracked)
                 {
                     NPC next = FindNextTarget();
                     if (next != null)
