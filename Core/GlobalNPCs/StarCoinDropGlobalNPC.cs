@@ -11,7 +11,7 @@ namespace NeoFantasyOnline.Core.GlobalNPCs
             globalLoot.Add(
                 ItemDropRule.Common(ModContent.ItemType<StarCoin>(),
                 chanceDenominator: 2, 
-                minimumDropped: 1, maximumDropped: 9));
+                minimumDropped: 1, maximumDropped: 5));
         }
     }
 }

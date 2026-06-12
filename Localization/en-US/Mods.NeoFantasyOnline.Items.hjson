@@ -1,54 +1,58 @@
 Fireball: {
 	DisplayName: Fireball
-	Tooltip: ""
+	Tooltip: Shoots a fireball toward the mouse cursor, damaging enemies it touches
 }
 
 Hurricane: {
 	DisplayName: Hurricane
-	Tooltip: ""
+	Tooltip: Creates a large hurricane at the cursor position, damaging nearby enemies
 }
 
 DefenseSong: {
-	DisplayName: Defense Song
-	Tooltip: ""
+	DisplayName: Song of Defense
+	Tooltip: Generates musical notes that orbit the player, damaging enemies they touch
 }
 
 Darkball: {
 	DisplayName: Darkball
-	Tooltip: ""
+	Tooltip:
+		'''
+		Fires a homing orb that damages enemies it touches
+		Hold to gather orbs around the cursor
+		'''
 }
 
 StarCoin: {
 	DisplayName: Star Coin
-	Tooltip: ""
+	Tooltip: "'Kira kira, doki doki!'"
 }
 
 KnightSword: {
 	DisplayName: Knight Sword
-	Tooltip: ""
+	Tooltip: Swings forward to slash and damage enemies
 }
 
 Judgement: {
 	DisplayName: Judgement
-	Tooltip: ""
+	Tooltip: A holy cross descends from the sky, damaging and briefly stunning enemies in the area
 }
 
 DarkSummon: {
 	DisplayName: Dark Summon
-	Tooltip: ""
+	Tooltip: Fires bouncing homing dark orbs that chain-jump between enemies
 }
 
 LightArea: {
 	DisplayName: Light Area
-	Tooltip: ""
+	Tooltip: Randomly generates holy zones around the caster, dealing continuous damage to enemies within
 }
 
 Blizzard: {
 	DisplayName: Blizzard
-	Tooltip: ""
+	Tooltip: Releases a blizzard in a random area, freezing enemies within range
 }
 
 BraverySong: {
-	DisplayName: Bravery Song
-	Tooltip: ""
+	DisplayName: Song of Bravery
+	Tooltip: Fires note magic in all directions, damaging and slowing enemies hit
 }

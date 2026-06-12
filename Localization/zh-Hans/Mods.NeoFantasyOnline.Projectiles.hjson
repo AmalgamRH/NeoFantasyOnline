@@ -2,9 +2,9 @@ Fireball_Proj.DisplayName: 火球术
 Hurricane_Proj.DisplayName: 飓风术
 DefenseSong_Proj.DisplayName: 守护之歌
 Darkball_Proj.DisplayName: 暗夜法球
-// KnightSword_Proj.DisplayName: Knight Sword_ Proj
-// Judgement_Proj.DisplayName: Judgement_ Proj
-DarkSummon_Proj.DisplayName: 暗黑召唤
+KnightSword_Proj.DisplayName: 骑士之刃
+Judgement_Proj.DisplayName: 裁决
+DarkSummon_Proj.DisplayName: 黑暗召唤
 LightArea_Projectile.DisplayName: 光之圣域
-// Blizzard_Proj.DisplayName: Blizzard_ Proj
-// BraverySong_Proj.DisplayName: Bravery Song_ Proj
+Blizzard_Proj.DisplayName: 暴风雪
+BraverySong_Proj.DisplayName: 勇气之歌
