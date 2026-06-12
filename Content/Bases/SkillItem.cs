@@ -18,8 +18,20 @@ namespace NeoFantasyOnline.Content.Bases
         /// 5级:击败血肉之墙  6级:击败机械Boss其二
         /// 7级:击败世纪之花  8级:击败邪教徒
         /// </summary>
-        public int Level { get; set; }
-        private bool _needsRefresh = true;
+        private int _level = 1;
+
+        public int Level
+        {
+            get => _level;
+            set
+            {
+                int clamped = Math.Clamp(value, 1, MaxLevel);
+                if (_level == clamped) return;
+                _level = clamped;
+                Item.rare = GetRarity(_level);
+                SetSkillDefaults();
+            }
+        }
 
         public const string TextureBasePath = "NeoFantasyOnline/Assets/Items/Weapons/";
 
@@ -34,15 +46,8 @@ namespace NeoFantasyOnline.Content.Bases
 
         public SkillLevelData CurrentStats => StatsByLevel[Math.Clamp(Level, 1, MaxLevel) - 1];
 
-        public void RefreshStats()
-        {
-            _needsRefresh = true;
-        }
-
         public sealed override void SetDefaults()
         {
-            _needsRefresh = false;
-            Level = Math.Clamp(Level, 1, 8);
             Item.width = Item.height = 20;
             Item.DamageType = ModContent.GetInstance<SkillDamage>();
             Item.shoot = ProjectileType;
@@ -82,19 +87,16 @@ namespace NeoFantasyOnline.Content.Bases
             if (tag.TryGet("Level", out int savedLevel))
             {
                 Level = savedLevel;
-                _needsRefresh = true;
             }
         }
 
         public override void NetSend(BinaryWriter writer)
         {
-            writer.Write(_needsRefresh);
             writer.Write(Level);
         }
 
         public override void NetReceive(BinaryReader reader)
         {
-            _needsRefresh = reader.ReadBoolean();
             Level = reader.ReadInt32();
         }
 
@@ -133,11 +135,6 @@ namespace NeoFantasyOnline.Content.Bases
             if (Level < cap)
             {
                 Level = cap;
-                _needsRefresh = true;
-            }
-            if (_needsRefresh)
-            {
-                SetDefaults();
             }
         }
 
