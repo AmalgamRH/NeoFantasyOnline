@@ -47,7 +47,7 @@ namespace NeoFantasyOnline.Content.Projectiles
             Projectile.spriteDirection = Projectile.velocity.X > 0 ? -1 : 1;
             Projectile.rotation = MathHelper.Pi + Projectile.velocity.ToRotation();
 
-            if (Main.rand.NextBool(10))
+            if (!Main.dedServ && Main.rand.NextBool(10))
             {
                 Vector2 velocity = Projectile.velocity * 0.5f;
                 Dust d = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height,
@@ -79,6 +79,9 @@ namespace NeoFantasyOnline.Content.Projectiles
 
         private void MakeDust()
         {
+            if (Main.dedServ)
+                return;
+
             for (int i = 0; i < 16; i++)
             {
                 float angle = MathHelper.TwoPi / 16 * i;

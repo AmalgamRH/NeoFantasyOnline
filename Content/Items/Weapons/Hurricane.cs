@@ -54,7 +54,7 @@ namespace NeoFantasyOnline.Content.Items.Weapons
             Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             var list = Hurricane_Proj.ActiveHurricanes;
-            list.RemoveAll(id => !Main.projectile[id].active);
+            list.RemoveAll(id => !Main.projectile[id].active || Main.projectile[id].owner != player.whoAmI);
 
             if (list.Count >= CurrentStats.Count)
             {

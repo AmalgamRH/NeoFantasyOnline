@@ -53,15 +53,15 @@ namespace NeoFantasyOnline.Content.Items.Weapons
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source,
             Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            var list = Hurricane_Proj.ActiveHurricanes;
-            list.RemoveAll(id => !Main.projectile[id].active);
+            var list = Blizzard_Proj.ActiveBlizzards;
+            list.RemoveAll(id => !Main.projectile[id].active || Main.projectile[id].owner != player.whoAmI);
 
             if (list.Count >= CurrentStats.Count)
             {
                 int oldestId = list[0];
                 list.RemoveAt(0);
                 if (Main.projectile[oldestId].active)
-                    Main.projectile[oldestId].timeLeft = (int)Hurricane_Proj.OutroTime;
+                    Main.projectile[oldestId].timeLeft = (int)Blizzard_Proj.OutroTime;
             }
 
             int proj = Projectile.NewProjectile(source, _spawnPos.Value, Vector2.Zero, 

@@ -1,6 +1,7 @@
 using NeoFantasyOnline.Content.DamageClasses;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
@@ -81,6 +82,16 @@ namespace NeoFantasyOnline.Content.Bases
             {
                 Level = savedLevel;
             }
+        }
+
+        public override void NetSend(BinaryWriter writer)
+        {
+            writer.Write(Level);
+        }
+
+        public override void NetReceive(BinaryReader reader)
+        {
+            Level = reader.ReadInt32();
         }
 
         /// <summary>升级所需的星石数量</summary>

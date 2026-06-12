@@ -49,12 +49,6 @@ namespace NeoFantasyOnline.Content.Items.Weapons
                 Vector2 spawnPos = player.Center + new Vector2(0, yOffset);
                 int p = Projectile.NewProjectile(source, spawnPos, Vector2.Zero, type, damage, knockback,
                     player.whoAmI, ai0: i, ai1: player.direction);
-                if (p >= 0)
-                {
-                    Main.projectile[p].localAI[0] = CurrentStats.Count;
-                }
-
-                SoundEngine.PlaySound(SoundID.Item1, position);
             }
             return false;
         }

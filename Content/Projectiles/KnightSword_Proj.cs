@@ -15,7 +15,7 @@ namespace NeoFantasyOnline.Content.Projectiles
         public override int ItemType => ModContent.ItemType<KnightSword>();
         private int Index => (int)Projectile.ai[0];
         private int _direction => (int)Projectile.ai[1];
-        private int TotalCount => (int)Projectile.localAI[0];
+        private int TotalCount => Stats.Count;
 
         private int _initialTimeLeft;
 
@@ -52,11 +52,6 @@ namespace NeoFantasyOnline.Content.Projectiles
         public override void AI()
         {
             Player player = Main.player[Projectile.owner];
-            if (!player.active || player.dead)
-            {
-                Projectile.Kill();
-                return;
-            }
 
             if (_direction == 1)
             {

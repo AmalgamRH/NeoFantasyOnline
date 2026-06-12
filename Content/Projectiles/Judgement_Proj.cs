@@ -1,8 +1,9 @@
-using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using NeoFantasyOnline.Content.Bases;
 using NeoFantasyOnline.Content.Items.Weapons;
+using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -10,6 +11,7 @@ using Terraria.GameContent;
 using Terraria.Graphics.CameraModifiers;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 namespace NeoFantasyOnline.Content.Projectiles
 {
@@ -164,17 +166,20 @@ namespace NeoFantasyOnline.Content.Projectiles
                                     _hitTileX = tx;
                                     _hitTileY = ty;
 
-                                    SoundEngine.PlaySound(SoundID.DD2_BetsysWrathImpact.
-                                        WithVolumeScale(4f).WithPitchOffset(-1.5f), 
-                                        Projectile.Center);
+                                    if (!Main.dedServ)
+                                    {
+                                        SoundEngine.PlaySound(SoundID.DD2_BetsysWrathImpact.
+                                            WithVolumeScale(4f).WithPitchOffset(-1.5f),
+                                            Projectile.Center);
 
-                                    PunchCameraModifier modifier = new PunchCameraModifier(
-                                        Projectile.Center, 
-                                        (Main.rand.NextFloat() * MathHelper.TwoPi).ToRotationVector2(), 
-                                        12f, 6f, 20, 800f, 
-                                        Projectile.identity.ToString());
+                                        PunchCameraModifier modifier = new PunchCameraModifier(
+                                            Projectile.Center,
+                                            (Main.rand.NextFloat() * MathHelper.TwoPi).ToRotationVector2(),
+                                            12f, 6f, 20, 800f,
+                                            Projectile.identity.ToString());
 
-                                    Main.instance.CameraModifiers.Add(modifier);
+                                        Main.instance.CameraModifiers.Add(modifier);
+                                    }
                                     State = Phase.Landing;
                                     _animTimer = 0;
                                     Projectile.velocity = Vector2.Zero;
@@ -238,6 +243,7 @@ namespace NeoFantasyOnline.Content.Projectiles
             if (target.GetGlobalNPC<JudgementGlobalNPC>().Dazed < Stats.HitTimes)
             {
                 target.GetGlobalNPC<JudgementGlobalNPC>().Dazed = Stats.HitTimes;
+                target.netUpdate = true;
             }
 
             if (State >= Phase.Landing)
@@ -324,6 +330,16 @@ namespace NeoFantasyOnline.Content.Projectiles
                 npc.velocity.Y = npc.velocity.Y * 0;
                 npc.velocity.X = npc.velocity.X * 0;
             }
+        }
+
+        public override void SendExtraAI(NPC npc, BitWriter bitWriter, BinaryWriter binaryWriter)
+        {
+            binaryWriter.Write(Dazed);
+        }
+
+        public override void ReceiveExtraAI(NPC npc, BitReader bitReader, BinaryReader binaryReader)
+        {
+            Dazed = binaryReader.ReadInt32();
         }
     }
 }

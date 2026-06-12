@@ -37,14 +37,14 @@ namespace NeoFantasyOnline.Content.Items.Weapons
 
         public override bool CanUseItem(Player player)
         {
-            DefenseSong_Proj.ActiveDefenseSongs.RemoveAll(id => !Main.projectile[id].active);
+            DefenseSong_Proj.ActiveDefenseSongs.RemoveAll(id => !Main.projectile[id].active || Main.projectile[id].owner != player.whoAmI);
             return DefenseSong_Proj.ActiveDefenseSongs.Count == 0;
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source,
             Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            DefenseSong_Proj.ActiveDefenseSongs.RemoveAll(id => !Main.projectile[id].active);
+            DefenseSong_Proj.ActiveDefenseSongs.RemoveAll(id => !Main.projectile[id].active || Main.projectile[id].owner != player.whoAmI);
 
             for (int i = 0; i < CurrentStats.Count; i++)
             {

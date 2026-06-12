@@ -45,7 +45,7 @@ namespace NeoFantasyOnline.Content.Projectiles
         }
         public int Index { get => (int)Projectile.ai[0]; set => Projectile.ai[0] = value; }
         public float OrbitTimer { get => Projectile.ai[1]; set => Projectile.ai[1] = value; }
-        public int TotalCount { get => (int)Projectile.localAI[0]; set => Projectile.localAI[0] = value; }
+        public int TotalCount => Stats.Count;
 
         public float Radius => 80 * (1f + (Projectile.scale - 1f) / 2f);
 

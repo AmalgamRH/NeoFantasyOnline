@@ -1,9 +1,10 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using NeoFantasyOnline.Content.Bases;
 using NeoFantasyOnline.Content.Items.Weapons;
-using System;
-using System.Collections.Generic;
 using Terraria;
 using Terraria.Audio;
 using Terraria.DataStructures;
@@ -72,7 +73,7 @@ namespace NeoFantasyOnline.Content.Projectiles
                 Projectile.frame = (Projectile.frame + 1) % Main.projFrames[Type];
             }
 
-            if(Main.rand.NextBool(180))
+            if (!Main.dedServ && Main.rand.NextBool(180))
                 SoundEngine.PlaySound(HitSound, Projectile.Center);
 
             Projectile.spriteDirection = Projectile.velocity.X > 0 ? -1 : 1;
@@ -147,6 +148,7 @@ namespace NeoFantasyOnline.Content.Projectiles
                 _bossTimer[target.whoAmI] = (int)Main.GameUpdateCount;
             ChainsLeft--;
             CurrentTarget = -1;
+            Projectile.netUpdate = true;
 
             if (ChainsLeft <= 0)
             {
@@ -166,6 +168,7 @@ namespace NeoFantasyOnline.Content.Projectiles
         {
             MakeDust();
             BouncesLeft--;
+            Projectile.netUpdate = true;
             if (BouncesLeft < 0)
             {
                 Projectile.Kill();
@@ -212,8 +215,25 @@ namespace NeoFantasyOnline.Content.Projectiles
             MakeDust();
         }
 
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            base.SendExtraAI(writer);
+            writer.Write(ChainsLeft);
+            writer.Write(BouncesLeft);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            base.ReceiveExtraAI(reader);
+            ChainsLeft = reader.ReadInt32();
+            BouncesLeft = reader.ReadInt32();
+        }
+
         public void MakeDust()
         {
+            if (Main.dedServ)
+                return;
+
             for (int i = 0; i < 12; i++)
             {
                 float angle = MathHelper.TwoPi / 12 * i;

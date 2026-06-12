@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using NeoFantasyOnline.Content.Bases;
 using NeoFantasyOnline.Content.Items.Weapons;
 using System;
+using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -102,19 +103,23 @@ namespace NeoFantasyOnline.Content.Projectiles
             }
             else if (!HasEverLocked && Projectile.timeLeft <= 260)
             {
-                Projectile.tileCollide = true;
-                Vector2 mouseDir = Vector2.Normalize(Main.MouseWorld - Projectile.Center);
-                float dx = mouseDir.X * HomingSpeed;
-                float dy = mouseDir.Y * HomingSpeed;
-                Projectile.velocity.X = (Projectile.velocity.X * 20f + dx) / 21f;
-                Projectile.velocity.Y = (Projectile.velocity.Y * 20f + dy) / 21f;
+                if (Projectile.owner == Main.myPlayer)
+                {
+                    Projectile.tileCollide = true;
+                    Vector2 mouseDir = Vector2.Normalize(Main.MouseWorld - Projectile.Center);
+                    float dx = mouseDir.X * HomingSpeed;
+                    float dy = mouseDir.Y * HomingSpeed;
+                    Projectile.velocity.X = (Projectile.velocity.X * 20f + dx) / 21f;
+                    Projectile.velocity.Y = (Projectile.velocity.Y * 20f + dy) / 21f;
+                    Projectile.netUpdate = true;
+                }
             }
             else
             {
                 Projectile.tileCollide = true;
             }
 
-            if (Main.rand.NextBool(8))
+            if (!Main.dedServ && Main.rand.NextBool(8))
             {
                 Vector2 vel = Projectile.velocity * 0.3f;
                 Dust d = Dust.NewDustDirect(Projectile.position, Projectile.width, Projectile.height,
@@ -134,8 +139,23 @@ namespace NeoFantasyOnline.Content.Projectiles
             modifiers.HitDirectionOverride = target.Center.X > player.MountedCenter.X ? 1 : -1;
         }
 
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            base.SendExtraAI(writer);
+            writer.Write(Projectile.localAI[0]);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            base.ReceiveExtraAI(reader);
+            Projectile.localAI[0] = reader.ReadSingle();
+        }
+
         public override void OnKill(int timeLeft)
         {
+            if (Main.dedServ)
+                return;
+
             for (int i = 0; i < 12; i++)
             {
                 float angle = MathHelper.TwoPi / 12 * i;

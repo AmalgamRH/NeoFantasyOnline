@@ -1,3 +1,4 @@
+using System.IO;
 using NeoFantasyOnline.Content.DamageClasses;
 using Terraria;
 using Terraria.DataStructures;
@@ -37,5 +38,29 @@ namespace NeoFantasyOnline.Content.Bases
             OnSkillProjSpawn(source);
         }
         public virtual void OnSkillProjSpawn(IEntitySource source) { }
+
+        public override void SendExtraAI(BinaryWriter writer)
+        {
+            writer.Write(Level);
+            writer.Write(Stats.FireCD);
+            writer.Write(Stats.Count);
+            writer.Write(Stats.Damage);
+            writer.Write(Stats.Speed);
+            writer.Write(Stats.Size);
+            writer.Write(Stats.HitTimes);
+        }
+
+        public override void ReceiveExtraAI(BinaryReader reader)
+        {
+            Level = reader.ReadInt32();
+            Stats = new SkillLevelData(
+                reader.ReadInt32(),
+                reader.ReadInt32(),
+                reader.ReadInt32(),
+                reader.ReadSingle(),
+                reader.ReadSingle(),
+                reader.ReadInt32()
+            );
+        }
     }
 }

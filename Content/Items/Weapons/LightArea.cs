@@ -41,14 +41,14 @@ namespace NeoFantasyOnline.Content.Items.Weapons
         }
         public override bool CanUseItem(Player player)
         {
-            ActiveLights.RemoveAll(id => !Main.projectile[id].active);
+            ActiveLights.RemoveAll(id => !Main.projectile[id].active || Main.projectile[id].owner != player.whoAmI);
             return ActiveLights.Count == 0;
         }
 
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source,
             Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
-            ActiveLights.RemoveAll(id => !Main.projectile[id].active);
+            ActiveLights.RemoveAll(id => !Main.projectile[id].active || Main.projectile[id].owner != player.whoAmI);
             int duration = 180;
             var usedPositions = new List<Vector2>();
 
