@@ -34,6 +34,7 @@ namespace NeoFantasyOnline.Content.Projectiles
             Projectile.scale = Stats.Size;
             Projectile.width = (int)(Projectile.width * Projectile.scale);
             Projectile.height = (int)(Projectile.height * Projectile.scale);
+            Projectile.timeLeft = 180 + 30;
         }
 
         public int timer;

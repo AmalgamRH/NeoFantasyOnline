@@ -12,8 +12,8 @@ namespace NeoFantasyOnline.Content.Items.Props
         {
             Item.width = Item.height = 16;
             Item.rare = ItemRarityID.Cyan;
-            Item.maxStack = Item.CommonMaxStack;
-            Item.value = Item.buyPrice(silver: 1);
+            Item.maxStack = Item.CommonMaxStack + 1;
+            Item.value = 0;
         }
     }
 }

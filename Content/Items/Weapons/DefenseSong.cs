@@ -50,7 +50,6 @@ namespace NeoFantasyOnline.Content.Items.Weapons
             {
                 int proj = Projectile.NewProjectile(source, player.MountedCenter, Vector2.Zero,
                     type, damage, knockback, player.whoAmI, ai0: i);
-                Main.projectile[proj].localAI[0] = CurrentStats.Count;
                 DefenseSong_Proj.ActiveDefenseSongs.Add(proj);
             }
 

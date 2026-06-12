@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+/*using Microsoft.Xna.Framework;
 using NeoFantasyOnline.Content.Bases;
 using NeoFantasyOnline.Content.Projectiles;
 using System;
@@ -46,4 +46,4 @@ namespace NeoFantasyOnline.Content.Items.Weapons
             return false;
         }
     }
-}
+}*/

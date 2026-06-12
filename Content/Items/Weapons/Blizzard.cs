@@ -19,14 +19,14 @@ namespace NeoFantasyOnline.Content.Items.Weapons
         {
             // 这里借用速度来算最大距离
             //  FireCD, Cnt, ATK, SPD, Size, HitTimes
-            new(   60, 1, 5,  16f,  1f,    -1), // Lv1
-            new(   60, 1, 10,  24f,  1f,    -1), // Lv2
-            new(   60, 2, 15,  48f,  1.2f,  -1), // Lv3
-            new(   60, 2, 20,  64f,  1.2f,  -1), // Lv4
-            new(   60, 2, 25,  100f, 1.5f,  -1), // Lv5
-            new(   60, 2, 30, 100f, 1.5f,  -1), // Lv6
-            new(   60, 2, 35, 100f, 1.75f, -1), // Lv7
-            new(   60, 2, 40, 100f, 1.75f, -1), // Lv8
+            new(   60, 1, 5,  16f,  1f,    60), // Lv1
+            new(   60, 1, 10,  24f,  1f,    60), // Lv2
+            new(   60, 2, 15,  48f,  1.2f,  60), // Lv3
+            new(   60, 2, 20,  64f,  1.2f,  60), // Lv4
+            new(   60, 2, 25,  100f, 1.5f,  60), // Lv5
+            new(   60, 2, 30, 100f, 1.5f,  60), // Lv6
+            new(   60, 2, 35, 100f, 1.75f, 60), // Lv7
+            new(   60, 2, 40, 100f, 1.75f, 60), // Lv8
         };
         public override void SetSkillDefaults()
         {
@@ -61,10 +61,10 @@ namespace NeoFantasyOnline.Content.Items.Weapons
                 int oldestId = list[0];
                 list.RemoveAt(0);
                 if (Main.projectile[oldestId].active)
-                    Main.projectile[oldestId].timeLeft = (int)Blizzard_Proj.OutroTime;
+                    Core.Networking.NfoNetHelper.SendProjectileTimeLeft(oldestId, (int)Blizzard_Proj.OutroTime);
             }
 
-            int proj = Projectile.NewProjectile(source, _spawnPos.Value, Vector2.Zero, 
+            int proj = Projectile.NewProjectile(source, _spawnPos.Value, Vector2.Zero,
                 type, damage, knockback, player.whoAmI);
             list.Add(proj);
             return false;

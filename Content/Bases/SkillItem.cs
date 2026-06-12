@@ -1,4 +1,5 @@
 using NeoFantasyOnline.Content.DamageClasses;
+using NeoFantasyOnline.Content.Items.Props;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -81,16 +82,19 @@ namespace NeoFantasyOnline.Content.Bases
             if (tag.TryGet("Level", out int savedLevel))
             {
                 Level = savedLevel;
+                _needsRefresh = true;
             }
         }
 
         public override void NetSend(BinaryWriter writer)
         {
+            writer.Write(_needsRefresh);
             writer.Write(Level);
         }
 
         public override void NetReceive(BinaryReader reader)
         {
+            _needsRefresh = reader.ReadBoolean();
             Level = reader.ReadInt32();
         }
 
@@ -144,6 +148,14 @@ namespace NeoFantasyOnline.Content.Bases
             {
                 nameLine.Text += $" (Level {Level})";
             }
+        }
+
+        public override void AddRecipes()
+        {
+            Recipe recipe = CreateRecipe()
+                .AddIngredient<StarCoin>(2500)
+                .AddTile(TileID.Anvils)
+                .Register();
         }
     }
 }

@@ -1,4 +1,4 @@
-using Microsoft.Xna.Framework;
+/* Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using NeoFantasyOnline.Content.Bases;
 using NeoFantasyOnline.Content.Items.Weapons;
@@ -76,13 +76,7 @@ namespace NeoFantasyOnline.Content.Projectiles
                 Projectile.scale,
                 Projectile.spriteDirection == 1 ? SpriteEffects.None : SpriteEffects.FlipVertically, 0f);
 
-            /*Main.spriteBatch.Draw(TextureAssets.MagicPixel.Value,
-                new Rectangle(
-                    (int)(Projectile.getRect().X - Main.screenPosition.X),
-                    (int)(Projectile.getRect().Y - Main.screenPosition.Y),
-                    Projectile.getRect().Width, Projectile.getRect().Height),
-                Color.Blue * 0.5f);*/
             return false;
         }
     }
-}
+}*/

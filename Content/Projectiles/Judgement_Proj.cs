@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using NeoFantasyOnline.Content.Bases;
 using NeoFantasyOnline.Content.Items.Weapons;
+using NeoFantasyOnline.Core.GlobalNPCs;
 using System.Collections.Generic;
 using System.IO;
 using Terraria;
@@ -240,11 +241,8 @@ namespace NeoFantasyOnline.Content.Projectiles
 
         public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
         {
-            if (target.GetGlobalNPC<JudgementGlobalNPC>().Dazed < Stats.HitTimes)
-            {
-                target.GetGlobalNPC<JudgementGlobalNPC>().Dazed = Stats.HitTimes;
-                target.netUpdate = true;
-            }
+            if (Stats.HitTimes > 0)
+                Core.Networking.NfoNetHelper.SendNpcDazed(target.whoAmI, Stats.HitTimes);
 
             if (State >= Phase.Landing)
             {
@@ -316,30 +314,5 @@ namespace NeoFantasyOnline.Content.Projectiles
             Main.spriteBatch.Draw(pixel, new Rectangle(rect.X + rect.Width - 1, rect.Y, 1, rect.Height), color);
         }
 #endif
-    }
-
-    public class JudgementGlobalNPC : GlobalNPC
-    {
-        public override bool InstancePerEntity => true;
-        public int Dazed = 0;
-        public override void AI(NPC npc)
-        {
-            if (Dazed > 0)
-            {
-                Dazed--;
-                npc.velocity.Y = npc.velocity.Y * 0;
-                npc.velocity.X = npc.velocity.X * 0;
-            }
-        }
-
-        public override void SendExtraAI(NPC npc, BitWriter bitWriter, BinaryWriter binaryWriter)
-        {
-            binaryWriter.Write(Dazed);
-        }
-
-        public override void ReceiveExtraAI(NPC npc, BitReader bitReader, BinaryReader binaryReader)
-        {
-            Dazed = binaryReader.ReadInt32();
-        }
     }
 }

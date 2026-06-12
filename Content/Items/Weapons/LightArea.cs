@@ -49,7 +49,6 @@ namespace NeoFantasyOnline.Content.Items.Weapons
             Vector2 position, Vector2 velocity, int type, int damage, float knockback)
         {
             ActiveLights.RemoveAll(id => !Main.projectile[id].active || Main.projectile[id].owner != player.whoAmI);
-            int duration = 180;
             var usedPositions = new List<Vector2>();
 
             for (int i = 0; i < CurrentStats.Count; i++)
@@ -70,8 +69,6 @@ namespace NeoFantasyOnline.Content.Items.Weapons
                     player.whoAmI);
                 if (p >= 0)
                 {
-                    Main.projectile[p].timeLeft = duration + 30;
-                    Main.projectile[p].localAI[1] = duration;
                     ActiveLights.Add(p);
                     usedPositions.Add(spawnPos);
                 }

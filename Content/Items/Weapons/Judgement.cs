@@ -31,6 +31,7 @@ namespace NeoFantasyOnline.Content.Items.Weapons
             Item.mana = 40;
             Item.useTime = CurrentStats.FireCD;
             Item.useAnimation = CurrentStats.FireCD;
+            Item.reuseDelay = 30;
             Item.knockBack = 0f;
             Item.shootSpeed = 0f;
             Item.UseSound = SoundID.Item80;

@@ -2,12 +2,15 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using NeoFantasyOnline.Content.Bases;
 using NeoFantasyOnline.Content.Items.Weapons;
+using NeoFantasyOnline.Core.GlobalNPCs;
 using System.Collections.Generic;
+using System.IO;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.ModLoader.IO;
 
 namespace NeoFantasyOnline.Content.Projectiles
 {
@@ -56,6 +59,12 @@ namespace NeoFantasyOnline.Content.Projectiles
         {
             Player player = Main.player[Projectile.owner];
             modifiers.HitDirectionOverride = target.Center.X > player.MountedCenter.X ? 1 : -1;
+        }
+
+        public override void OnHitNPC(NPC target, NPC.HitInfo hit, int damageDone)
+        {
+            if (Stats.HitTimes > 0)
+                Core.Networking.NfoNetHelper.SendNpcSlowed(target.whoAmI, Stats.HitTimes);
         }
 
         public override bool PreDraw(Player player, ref Color lightColor)
