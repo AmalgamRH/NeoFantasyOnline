@@ -34,6 +34,7 @@ namespace NeoFantasyOnline.Content.Projectiles
             Projectile.penetrate = -1;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 15;
+            _initialTimeLeft = 12;
         }
 
         public override void OnSkillProjSpawn(IEntitySource source)
@@ -46,7 +47,6 @@ namespace NeoFantasyOnline.Content.Projectiles
             Projectile.width += (int)offset;
 
             Projectile.timeLeft = 12;
-            _initialTimeLeft = Projectile.timeLeft;
         }
 
         public override void AI()

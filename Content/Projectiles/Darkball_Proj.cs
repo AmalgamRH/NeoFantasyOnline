@@ -14,7 +14,7 @@ namespace NeoFantasyOnline.Content.Projectiles
 {
     public class Darkball_Proj : SkillProjectile
     {
-        public float HomingSpeed = 12f;
+        public float HomingSpeed => 12f * MathHelper.Lerp(1f, 1.5f, Level / 8f);
         public bool HasEverLocked { get => Projectile.localAI[0] != 0f; set => Projectile.localAI[0] = value ? 1f : 0f; }
 
         public override int ItemType => ModContent.ItemType<Darkball>();
@@ -38,7 +38,6 @@ namespace NeoFantasyOnline.Content.Projectiles
         public override void OnSkillProjSpawn(IEntitySource source)
         {
             Projectile.penetrate = Stats.HitTimes;
-            HomingSpeed = 12f * MathHelper.Lerp(1f, 1.5f, Level / 8f);
         }
         public override void AI()
         {

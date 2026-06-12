@@ -22,7 +22,7 @@ namespace NeoFantasyOnline.Content.Projectiles
         private int ChainsLeft { get => (int)Projectile.localAI[0]; set => Projectile.localAI[0] = value; }
         private int BouncesLeft { get => (int)Projectile.localAI[1]; set => Projectile.localAI[1] = value; }
 
-        private float HomingSpeed;
+        private float HomingSpeed => Stats.Speed;
         private bool _hasEverTracked;
         private bool _noTargetCountdown;
         private float _effectTimer;
@@ -59,7 +59,6 @@ namespace NeoFantasyOnline.Content.Projectiles
 
         public override void OnSkillProjSpawn(IEntitySource source)
         {
-            HomingSpeed = Stats.Speed;
             ChainsLeft = (int)Projectile.localAI[0];
             BouncesLeft = Stats.HitTimes;
             Projectile.timeLeft = 180;
