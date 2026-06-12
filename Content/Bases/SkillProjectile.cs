@@ -20,9 +20,12 @@ namespace NeoFantasyOnline.Content.Bases
 
         public SkillLevelData Stats { get; set; }
 
+        private bool _spawnSynced;
+
         public sealed override void SetDefaults()
         {
             Projectile.DamageType = ModContent.GetInstance<SkillDamage>();
+            _spawnSynced = false;
             SetSkillDefaults();
         }
 
@@ -61,6 +64,11 @@ namespace NeoFantasyOnline.Content.Bases
                 reader.ReadSingle(),
                 reader.ReadInt32()
             );
+            if (!_spawnSynced)
+            {
+                OnSkillProjSpawn(null);
+                _spawnSynced = true;
+            }
         }
     }
 }
