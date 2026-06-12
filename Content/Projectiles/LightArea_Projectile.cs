@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using NeoFantasyOnline.Content.Bases;
 using NeoFantasyOnline.Content.Items.Weapons;
+using System.Collections.Generic;
 using Terraria;
 using Terraria.DataStructures;
 using Terraria.GameContent;
@@ -24,7 +25,12 @@ namespace NeoFantasyOnline.Content.Projectiles
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 15;
             Projectile.timeLeft = 180;
-            Projectile.drawLayer = ProjectileDrawLayerID.BehindNPCsAndTiles;
+            Projectile.hide = true;
+        }
+
+        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
+        {
+            behindNPCsAndTiles.Add(index);
         }
 
         public override void OnSkillProjSpawn(IEntitySource source)
@@ -71,7 +77,7 @@ namespace NeoFantasyOnline.Content.Projectiles
             LightArea.ActiveLights.Remove(Projectile.whoAmI);
         }
 
-        public override bool PreDraw(Player player, ref Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
             Texture2D tex = TextureAssets.Projectile[Type].Value;
             int frameHeight = tex.Height / Main.projFrames[Type];

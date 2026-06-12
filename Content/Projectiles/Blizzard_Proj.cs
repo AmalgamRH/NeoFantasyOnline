@@ -67,7 +67,7 @@ namespace NeoFantasyOnline.Content.Projectiles
                 Core.Networking.NfoNetHelper.SendNpcSlowed(target.whoAmI, Stats.HitTimes);
         }
 
-        public override bool PreDraw(Player player, ref Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
             Texture2D tex = TextureAssets.Projectile[Type].Value;
             Texture2D tex2 = ModContent.Request<Texture2D>(Texture + "2").Value;

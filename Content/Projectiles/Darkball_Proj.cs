@@ -179,7 +179,7 @@ namespace NeoFantasyOnline.Content.Projectiles
             }
         }
 
-        public override bool PreDraw(Player player, ref Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
             Texture2D tex = TextureAssets.Projectile[Type].Value;
             int frameHeight = tex.Height / Main.projFrames[Type];

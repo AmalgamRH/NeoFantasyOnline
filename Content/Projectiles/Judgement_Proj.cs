@@ -54,7 +54,12 @@ namespace NeoFantasyOnline.Content.Projectiles
             Projectile.penetrate = -1;
             Projectile.usesLocalNPCImmunity = true;
             Projectile.localNPCHitCooldown = 20;
-            Projectile.drawLayer = ProjectileDrawLayerID.BehindNPCsAndTiles;
+            Projectile.hide = true;
+        }
+
+        public override void DrawBehind(int index, List<int> behindNPCsAndTiles, List<int> behindNPCs, List<int> behindProjectiles, List<int> overPlayers, List<int> overWiresUI)
+        {
+            behindNPCsAndTiles.Add(index);
         }
 
         public override void OnSkillProjSpawn(IEntitySource source)
@@ -250,7 +255,7 @@ namespace NeoFantasyOnline.Content.Projectiles
             }
         }
 
-        public override bool PreDraw(Player player, ref Color lightColor)
+        public override bool PreDraw(ref Color lightColor)
         {
             Texture2D tex = TextureAssets.Projectile[Type].Value;
             int frameHeight = tex.Height / Main.projFrames[Type];
